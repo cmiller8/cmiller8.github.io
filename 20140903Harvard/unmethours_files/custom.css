@@ -1,0 +1,161 @@
+.content h3 {
+  font-size: 14px;
+  padding: 3px 0px 3px 0px;
+}
+
+.help-link {
+  font-size:small;
+  text-decoration:underline;
+  color:#aa0000;
+}
+
+.help-link:hover {
+  color:#ee0000;
+}
+
+#homeButton {
+  visibility:hidden;
+  width:0px;
+}
+
+/* sign in/register, sign out, help */
+#userToolsNav a {
+  text-transform:capitalize;
+  color:#cccccc;
+}
+
+#userToolsNav a:hover {
+  color:#ffffff;
+}
+
+#userToolsNav a.help {
+  visibility:hidden;
+}
+
+
+/* tags, people, badges */
+#metaNav a {
+  text-transform:capitalize;
+  text-decoration:underline;
+  color:#cccccc;
+  padding: 0px 0px 0px 0px;
+  margin-left:20px;
+}
+
+#metaNav a:hover {
+  color:#ffffff;
+}
+
+#metaNav #navTags {
+  background-image:none;
+}
+
+#metaNav #navUsers {
+  background-image:none;
+}
+
+#metaNav #navBadges {
+  background-image:none;
+}
+
+
+
+/* ALL, UNANSWERED, FOLLOWING */
+.scope-selector {
+  color:#cccccc;
+}
+
+.scope-selector:hover {
+  color:#ffffff;
+}
+
+
+
+#askButton {
+  /* check blocks/secondary_header.html and widgets/ask_button.html*/
+
+/*  float: right;
+  font-size: 20px;
+  height: 42px;
+  line-height: 44px;
+  margin: 6px 0 0 0;
+  text-transform: uppercase;
+  width: 200px;*/
+  /* to match width of sidebar */
+
+/*  background-color: #ff9900;
+  background-image: none;*/
+}
+
+
+.box .contributorback {
+  background: #eceeeb;
+}
+
+.box h2 {
+  text-align:left;
+  padding-left: 10px;
+  text-transform:capitalize;
+}
+
+#interestingTagAdd, #ignoredTagAdd {
+/*  background-color: #ff9900;
+  background-image: none;*/
+}
+
+.box a.followed, .box a.follow {
+/*  background-color: #ff9900;
+  background-image: none;*/
+}
+
+.question-img-upvote, .question-img-downvote, .answer-img-upvote, .answer-img-downvote {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.question-img-upvote, .answer-img-upvote {
+  background: url('http://proxy.unmethours.com/images/vote-arrow-up-new.png') no-repeat scroll 0% 0% transparent;
+}
+
+.question-img-upvote:hover, .question-img-upvote.on, .answer-img-upvote:hover, .answer-img-upvote.on {
+  background: url('http://proxy.unmethours.com/images/vote-arrow-up-on-new.png') no-repeat scroll 0% 0% transparent;
+}
+
+.question-img-downvote, .answer-img-downvote {
+  background: url('http://proxy.unmethours.com/images/vote-arrow-down-new.png') no-repeat scroll 0% 0% transparent;
+}
+
+.question-img-downvote:hover, .question-img-downvote.on, .answer-img-downvote:hover, .answer-img-downvote.on {
+  background: url('http://proxy.unmethours.com/images/vote-arrow-down-on-new.png') no-repeat scroll 0% 0% transparent;
+}
+
+.user-card {
+  height: auto;
+}
+
+.footer-links a {
+  color:#cccccc;
+}
+
+.footer-links a:hover {
+  color:#ffffff;
+}
+
+.copyright {
+  font-size:small;
+  float: none;
+  width: 100%;
+  clear: both;
+  text-align: left;
+}
+
+.copyright img.license-logo {
+  float: none;
+}
+
+
+.section-title {
+  
+}
+
