@@ -1,0 +1,170 @@
+<!doctype>
+<head>
+    <link rel="stylesheet" href="rickshaw.min.css">
+    <link type="text/css" rel="stylesheet" href="style_calendar.css"/>
+    <script src="d3.v3.min.js" charset="utf-8"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+    <script src="rickshaw.min.js"></script>
+    <script type="text/javascript" src="cal-heatmap-master/cal-heatmap.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="style_calendar.css"/>
+    <link type="text/css" rel="stylesheet" href="colorbrewer/colorbrewer.css"/>
+    <link rel="stylesheet" href="cal-heatmap-master/cal-heatmap.css" />
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+
+<style>
+/*body {
+  font: 18px;
+}*/
+#chart {
+    float: left;
+    margin-top: 0px;
+          }
+#y_axis {
+   float: left;
+   margin-top: 0px;
+          }
+#legend {
+        display: inline-block;
+        vertical-align: middle;
+        margin: 0px 0 0 10px;
+}
+
+<style type="text/css">
+    .q8{fill:rgb(141, 211, 199);}
+    .q7{fill:rgb(188, 128, 189);}
+    .q6{fill:rgb(190, 186, 218);}
+    .q5{fill:rgb(251, 128, 114);}
+    .q4{fill:rgb(128, 177, 211);}
+    .q3{fill:rgb(253, 180, 98);}
+    .q2{fill:rgb(179, 222, 105);}
+    .q1{fill:rgb(252, 205, 229);}
+    .q0{fill:rgb(217, 217, 217);}
+</style>
+
+</head>
+<body>
+<!--     <h2 style="font-size:18px;">
+      Calendar Heat Maps
+    </h2> -->
+
+    Daily energy consumption profiles -- Example 2<br>
+    <font size="4">
+      (Hover to see values)
+    </font>
+    <br>
+<!--     <div id="chart1" style="nullposition:relative;float: left;"></div>        
+    <div id="chart2" style="nullposition:relative;float: left;"></div> -->
+    <div id="chart1"></div>
+    
+    <button class="btn" id="domainDynamicDimension-previous">Previous</button>
+    <button class="btn" id="domainDynamicDimension-next">Next</button>
+    <br><br>
+<!--     <div id="y_axis"></div>
+ -->    <div id="chart2" style="nullposition:relative;float: left;"></div>
+    <div id="legend" style="nullposition:relative;float: left;"></div>
+
+<script>
+
+var cal_cluster = new CalHeatMap();
+    cal_cluster.init({
+      itemSelector: "#chart1",
+      itemName: ["Cluster", "Cluster"],
+      domain: "month",
+      subDomain: "day",
+      domainLabelFormat: "%b-%Y",
+      data: "ClusterCalHeatmap_Cooling Electricity_7Clusters_10000.json",
+      start: new Date(2011, 12),
+      minDate: new Date(2009, 11),
+      maxDate: new Date(2013, 06),
+      cellSize: 13,
+      range: 12,
+      subDomainTextFormat: "%d",
+      nextSelector: "#domainDynamicDimension-next",
+      previousSelector: "#domainDynamicDimension-previous",
+      legend: [1,2,3,4,5,6],
+      displayLegend: false
+    });
+
+var palette = new Rickshaw.Color.Palette( {scheme: 'colorwheel'} );
+
+d3.json('Profiles_Cooling Electricity_7Clusters_10000.json', function(error, json) {
+
+var graph = new Rickshaw.Graph( {
+                element: document.querySelector("#chart2"),
+                width: 750,
+                height: 280,
+                renderer: 'line',
+                series: [
+                         {name: 'Cluster 1', 
+                          color: "#FCCDE5",
+                          data: json[0].data},
+
+                          {name: 'Cluster 2', 
+                          color: "#B3DE69",
+                          data: json[1].data},
+
+                          {name: 'Cluster 3', 
+                          color: "#FDB462",
+                          data: json[2].data},
+
+                          {name: 'Cluster 4', 
+                          color: "#80B1D3",
+                          data: json[3].data},
+
+                          {name: 'Cluster 5', 
+                          color: "#FB8072",
+                          data: json[4].data},
+
+
+                          {name: 'Cluster 6', 
+                          color: "#BEBADA",
+                          data: json[5].data},
+
+                          {name: 'Cluster 7', 
+                          color: "#BC80BD",
+                          data: json[6].data}
+                          ]
+                })
+
+
+var x_axis = new Rickshaw.Graph.Axis.Time( { graph: graph } );
+
+var yScale = d3.scale.linear().range([15,27]);
+
+var y_axis = new Rickshaw.Graph.Axis.Y( {
+        graph: graph,
+        orientation: 'left',
+        tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
+        element: document.getElementById('y_axis'),
+        scale: yScale
+
+} );
+
+var hoverDetail = new Rickshaw.Graph.HoverDetail( {
+    graph: graph
+} );
+
+var legend = new Rickshaw.Graph.Legend( {
+    graph: graph,
+    element: document.getElementById('legend')
+
+} );
+
+var shelving = new Rickshaw.Graph.Behavior.Series.Toggle({
+    graph: graph,
+    legend: legend
+});
+
+var highlighter = new Rickshaw.Graph.Behavior.Series.Highlight( {
+        graph: graph,
+        legend: legend
+} );
+
+graph.render();
+
+
+});
+
+</script>
+</body>
