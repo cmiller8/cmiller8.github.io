@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<!-- saved from url=(0097)https://blog.twitter.com/2015/introducing-practical-and-robust-anomaly-detection-in-a-time-series -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" version="XHTML+RDFa 1.0" dir="ltr" xmlns:og="http://ogp.me/ns#" class="js"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+<meta name="twitter:url" content="https://blog.twitter.com/2015/introducing-practical-and-robust-anomaly-detection-in-a-time-series">
+<meta name="twitter:site" content="@TwitterEng">
+<meta name="og:url" content="https://blog.twitter.com/2015/introducing-practical-and-robust-anomaly-detection-in-a-time-series">
+<meta name="twitter:image" content="https://blog.twitter.com/sites/all/themes/gazebo/img/twitter-bird-white-on-blue.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:widgets:share-with-retweet" content="publisher-only">
+<script async="" src="./twitteranomaly_files/analytics.js"></script><script type="application/json" id="drupal-settings">{"basePath":"\/","pathPrefix":"","ajaxPageState":{"theme":"gazebo_blog","theme_token":"4uz273jM6l-8sohJv2zuoxTs3UmPjyizilK8Toe5-tc"},"analyticsSettings":{"google":{"accounts":["UA-30775-44","UA-30775-45"],"options":{"customVars":{"dimension2":"2","dimension1":"engineering"},"customUrl":"","trackerUrl":"https:\/\/g.twimg.com\/googleanalytics\/analytics.js","domains":["blog.twitter.com"],"displayAdvertisingFeatures":true}},"scribe":{"client":"gazebo"},"trackingPixel":{"pixel_ids":[]}}}</script><meta content="on" name="twitter:widgets:csp">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<link href="https://abs.twimg.com/favicons/favicon.ico" rel="shortcut icon" type="image/x-icon">
+<meta name="og:image" content="https://blog.twitter.com/sites/all/themes/gazebo/img/twitter-bird-white-on-blue.png">
+<meta name="og:site_name" content="Twitter Blogs">
+<meta name="og:title" content="Introducing practical and robust anomaly detection in a time series | Twitter Blogs">
+<meta name="description" content="A novel way to detect anomalies in big data.">
+<link href="https://g.twimg.com/ios_homescreen_icon.png" rel="apple-touch-icon">
+<link rel="shortlink" href="https://blog.twitter.com/node/5261">
+<meta name="og:description" content="A novel way to detect anomalies in big data.">
+<meta name="twitter:creator" content="@TwitterEng">
+<link rel="canonical" href="./twitteranomaly_files/twitteranomaly.html">
+<link rel="image_src" href="https://blog.twitter.com/sites/all/themes/gazebo/img/twitter-bird-white-on-blue.png">
+<meta name="twitter:description" content="A novel way to detect anomalies in big data.">
+<meta name="twitter:title" content="Introducing practical and robust anomaly detection in a time series | Twitter Blogs">
+<meta name="og:type" content="website">
+    <title>Introducing practical and robust anomaly detection in a time series | Twitter Blogs</title>
+    <link type="text/css" rel="stylesheet" href="./twitteranomaly_files/css_ybCH4ZdUiLXtw2104WLMLglmU2y2yid55VrnU4gxHLE.css" media="all">
+<link type="text/css" rel="stylesheet" href="./twitteranomaly_files/css_RR82BMi-GZZbdskJkKE8yRSiOR9jM-Vu1_7R9fs6l78.css" media="all">
+<link type="text/css" rel="stylesheet" href="./twitteranomaly_files/css_sIhfd1AIaScyZ0Ro3yeD8e_lv9OHNmlgCWidBHRlOEc.css" media="all">
+<link type="text/css" rel="stylesheet" href="./twitteranomaly_files/css_w2JS-S0N30zD6mCh0Uh-NMZkfzYxwceOusejsIau5ts.css" media="all">
+<link type="text/css" rel="stylesheet" href="./twitteranomaly_files/0f4fc5039bc9a776d712a0898d886c9f.css" media="all">
+<link type="text/css" rel="stylesheet" href="./twitteranomaly_files/css_99MuNsPgao6QXNEC_pC8QhxKxjZtCyS6Iz0anAvBwFQ.css" media="all">
+    <script type="text/javascript" src="./twitteranomaly_files/js_B4JLEjCo-pHoZ60ejMReYXE2xHYvGrcLCaB4buJhKgk.js"></script>
+<script type="text/javascript" src="./twitteranomaly_files/js_khfOAWT2z7QE7s9bNkw5afNKRe9w8PMP6gthYSvApG0.js"></script>
+<script type="text/javascript" src="./twitteranomaly_files/js_yHfyvvbg3N65danG-SnvIVxNRylbHwS_-mBwKDrJIFE.js"></script>
+<script type="text/javascript" src="./twitteranomaly_files/js_q3lpnnDzfZEGekMTiaYdv-srw9tIITwWSC2TY1KqiVg.js"></script>
+<script type="text/javascript" src="./twitteranomaly_files/js_kNmTP4ixqVsr3db9oC6Znk3wgWKRGVeqxI-GOnbRYdo.js"></script>
+<script type="text/javascript" src="./twitteranomaly_files/js_BsD1J0VYO_7sNrnLQ25AQi_96pz4TWChe8TDkeZN9vs.js"></script>
+  <style id="style-1-cropbar-clipper">/* Copyright 2014 Evernote Corporation. All rights reserved. */
+.en-markup-crop-options {
+    top: 18px !important;
+    left: 50% !important;
+    margin-left: -100px !important;
+    width: 200px !important;
+    border: 2px rgba(255,255,255,.38) solid !important;
+    border-radius: 4px !important;
+}
+
+.en-markup-crop-options div div:first-of-type {
+    margin-left: 0px !important;
+}
+</style></head>
+
+  <body class="html not-front logged-in one-sidebar sidebar-second page-node page-node- page-node-5261 node-type-blog engineering-blog i18n-en g-blog g-blog-page" data-twttr-rendered="true">
+    <div id="skip-link">
+      <a href="https://blog.twitter.com/2015/introducing-practical-and-robust-anomaly-detection-in-a-time-series#main-content" class="element-invisible element-focusable">Skip to main content</a>
+    </div>
+        <div id="page-wrapper">
+  
+  <nav id="globalnav" class="with-subnav">
+    <div class="container">
+      <div id="site-name">
+        <a href="https://blog.twitter.com/engineering" title="Home" class="pull-left"><span class="twitter-bird"></span>Engineering Blog</a>      </div>
+      <div class="d-block d-block-menu signed-in dropdown profile-menu">
+  <a class="profile-menu-handle dropdown-toggle" data-toggle="dropdown" href="http://twitter.com/datadrivenbuild">
+    <div class="picture"><img src="./twitteranomaly_files/H3G8RY-S_mini.png" alt="datadrivenbuild"></div>
+  </a>
+<ul class="menu dropdown-menu pull-right" role="menu"><li class="first leaf" role="menuitem"><a href="https://twitter.com/" title="">Back to Twitter</a></li>
+<li class="last leaf" role="menuitem"><a href="https://twitter.com/logout" title="">Sign out</a></li>
+</ul></div><div class="d-block d-block-search search-form">
+        <form action="./twitteranomaly_files/twitteranomaly.html" method="get" id="search-block-form" accept-charset="UTF-8"><div>  <h2 class="element-invisible">Search form</h2>
+<div class="form-item control-group">
+  <label class="control-label element-invisible" for="edit-search-block-form--2">Search </label>
+ <div class="controls"><input title="Enter the terms you wish to search for." placeholder="Search engineering blog" type="text" id="edit-search-block-form--2" name="search_block_form" value="" size="15" maxlength="128" class="form-text"></div></div>
+<input class="search-form-submit" type="submit" name="op" value="Search">
+<input type="hidden" name="form_build_id" value="form-eCtA6nbibvlND8mEcfg3b3nDlAHlnqt1HgWypmeKyp8">
+<input type="hidden" name="form_id" value="search_block_form">
+<input type="hidden" name="term" value="149">
+</div></form></div>      <a href="https://about.twitter.com/blogs" id="blog-directory-link">All Twitter Blogs</a>    </div>
+  </nav>
+
+  
+  
+  <section id="hero" class="hero-short hero-fade">
+      <div class="hero-wrap-outer">
+      <div class="container">
+        <div class="hero-wrap-inner">
+          
+  <h1 id="page-title"></h1>
+
+
+      <p id="tagline"></p>
+  
+  <p id="en-title"></p>
+
+  &nbsp;
+
+        </div>
+      </div>
+    </div>
+    </section>
+
+  <section id="gaz-content" class="">
+    <div class="container">
+
+      
+      <div id="gaz-content-wrap-outer" class="row">
+
+        
+        <div id="gaz-content-wrap-inner" class="span12">
+
+          
+          <div class="row">
+
+            <div class="article-wrap span9">
+
+                            <div class="tabs">
+                              </div>
+              
+              <article id="gaz-content-body" class="content">
+                              <header>
+                                    <h1 id="page-title"><a href="./twitteranomaly_files/twitteranomaly.html" class="active">Introducing practical and robust anomaly detection in a time series</a></h1>
+                                  </header>
+                            <div class="d-block d-block-system g-main">
+        <div id="node-5261" class="node node-blog">
+
+      
+      <div class="submitted">
+      <span class="date">Tuesday, January 6, 2015</span> | <span class="name">By Arun Kejariwal (<span class="handle"><span class="screen-name"><a href="https://twitter.com/intent/user?screen_name=arun_kejariwal" title="arun_kejariwal">@arun_kejariwal</a></span></span>), Software Engineer&nbsp;[16:49 UTC]</span>    </div>
+  
+      <div class="g-tweet-button">
+      <a href="https://twitter.com/intent/tweet?text=Introducing+practical+and+robust+anomaly+detection+in+a+time+series&url=https%3A%2F%2Fblog.twitter.com%2F2015%2Fintroducing-practical-and-robust-anomaly-detection-in-a-time-series" class="btn btn-cta">Tweet</a>    </div>
+  
+  <div class="content">
+    
+    <div class="d-field d-body g-body"><div class="d-field-item"><p>Both last year and this year, we saw a spike in the number of photos uploaded to Twitter on Christmas Eve, Christmas and New Year’s Eve (in other words, an anomaly occurred in the corresponding time series). Today, we’re announcing <a href="https://github.com/twitter/AnomalyDetection">AnomalyDetection</a>, our open-source R package that automatically detects anomalies like these in big data in a practical and robust way.</p>
+<p class="align-left"><a href="./twitteranomaly_files/Anomaly_ChristmasEve_2014.png"><img src="./twitteranomaly_files/Anomaly_ChristmasEve_2014.png" width="700" height="304" alt=""></a><em>Time series from Christmas Eve 2014</em></p>
+<p class="align-left"><em><a href="./twitteranomaly_files/figure_2_Photos_ChristmasEve_2013.png"><img src="./twitteranomaly_files/figure_2_Photos_ChristmasEve_2013.png" width="700" height="304" alt=""></a><em><em><em><em>Time series from Christmas Eve 2013</em></em></em></em></em></p>
+<p class="align-left"></p>
+<p><em></em>Early detection of anomalies plays a key role in ensuring high-fidelity data is available to our own product teams and those of our data partners. This package helps us monitor spikes in user engagement on the platform surrounding holidays, major sporting events or during breaking news. Beyond surges in social engagement, exogenic factors – such as bots or spammers – may cause an anomaly in number of favorites or followers. The package can be used to find such bots or spam, as well as detect anomalies in system metrics after a new software release. We’re open-sourcing AnomalyDetection because we’d like the public community to evolve the package and learn from it as we have.</p>
+<p><a href="https://blog.twitter.com/2014/breakout-detection-in-the-wild">Recently</a>, we open-sourced <a href="https://github.com/twitter/BreakoutDetection">BreakoutDetection</a>, a complementary R package for automatic detection of one or more breakouts in time series. While anomalies are point-in-time anomalous data points, breakouts are characterized by a ramp up from one steady state to another.</p>
+<p>Despite prior research in anomaly detection [1], these techniques are not applicable in the context of social network data because of its inherent seasonal and trend components. Also, as pointed out by Chandola et al. [2], anomalies are contextual in nature and hence, techniques developed for anomaly detection in one domain can rarely be used ‘as is’ in another domain.</p>
+<p>Broadly, an anomaly can be characterized in the following ways:</p>
+<ol><li class="align-left"><strong>Global/Local:</strong> At Twitter, we observe distinct seasonal patterns in most of the time series we monitor in production. Furthermore, we monitor multiple modes in a given time period. The seasonal nature can be ascribed to a multitude of reasons such as different user behavior across different geographies. Additionally, over longer periods of time, we observe an underlying trend. This can be explained, in part, by organic growth. As the figure below shows, global anomalies typically extend above or below expected seasonality and are therefore not subject to seasonality and underlying trend. On the other hand, local anomalies, or anomalies which occur inside seasonal patterns, are masked and thus are much more difficult to detect in a robust fashion.&nbsp;<a href="./twitteranomaly_files/figure_localglobal_anomalies.png"><img src="./twitteranomaly_files/figure_localglobal_anomalies.png" width="700" height="186" alt="" class="align-center"></a><em>Illustrates positive/negative, global/local anomalies detected in real data</em></li>
+<li class="align-left"><strong>Positive/Negative:</strong> An anomaly can be positive or negative. An example of a positive anomaly is a point-in-time increase in number of Tweets during the Super Bowl. An example of a negative anomaly is a point-in-time decrease in QPS (queries per second). Robust detection of positive anomalies serves a key role in efficient capacity planning. Detection of negative anomalies helps discover potential hardware and data collection issues.</li>
+</ol><p><strong>How does the package work?</strong><br>The primary algorithm, Seasonal Hybrid ESD (S-H-ESD), builds upon the Generalized ESD test [3] for detecting anomalies. S-H-ESD can be used to detect both global and local anomalies. This is achieved by employing time series decomposition and using <a href="http://www.wiley.com/WileyCDA/WileyTitle/productCd-0470129905.html">robust statistical metrics</a>, viz., median together with ESD. In addition, for long time series such as 6 months of minutely data, the algorithm employs piecewise approximation. This is rooted to the fact that trend extraction in the presence of anomalies is non-trivial for anomaly detection [4].</p>
+<p>The figure below shows large global anomalies present in the raw data and the local (intra-day) anomalies that S-H-ESD exposes in the residual component via our statistically robust decomposition technique.<a href="./twitteranomaly_files/figure_raw_residual_global_local.png"><img src="./twitteranomaly_files/figure_raw_residual_global_local.png" width="700" height="177" alt="" class="align-left"></a></p>
+<p>Besides time series, the package can also be used to detect anomalies in a vector of numerical values. We have found this very useful as many times the corresponding timestamps are not available. The package provides rich visualization support. The user can specify the direction of anomalies, the window of interest (such as last day, last hour) and enable or disable piecewise approximation. Additionally, the x- and y-axis are annotated in a way to assist with visual data analysis.</p>
+<p><strong>Getting started</strong><br>To begin, install the R package using the commands below on the R console:</p>
+<div><div id="highlighter_430269" class="syntaxhighlighter  bash"><div class="toolbar"><span><a href="https://blog.twitter.com/2015/introducing-practical-and-robust-anomaly-detection-in-a-time-series#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash functions">install</code><code class="bash plain">.packages(</code><code class="bash string">"devtools"</code><code class="bash plain">)</code></div><div class="line number2 index1 alt1"><code class="bash plain">devtools::install_github(</code><code class="bash string">"twitter/AnomalyDetection"</code><code class="bash plain">)</code></div><div class="line number3 index2 alt2"><code class="bash plain">library(AnomalyDetection)</code></div></div></td></tr></tbody></table></div></div>
+<p>The function AnomalyDetectionTs is used to discover statistically meaningful anomalies in the input time series. The documentation of the function AnomalyDetectionTs details the input arguments and output of the function AnomalyDetectionTs, which can be seen by using the command below.</p>
+<div><div id="highlighter_355850" class="syntaxhighlighter  bash"><div class="toolbar"><span><a href="https://blog.twitter.com/2015/introducing-practical-and-robust-anomaly-detection-in-a-time-series#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash plain">help(AnomalyDetectionTs)</code></div></div></td></tr></tbody></table></div></div>
+<p><strong>An example</strong><br>The user is recommended to use the example dataset which comes with the packages. Execute the following commands:</p>
+<div><div id="highlighter_292217" class="syntaxhighlighter  bash"><div class="toolbar"><span><a href="https://blog.twitter.com/2015/introducing-practical-and-robust-anomaly-detection-in-a-time-series#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash plain">data(raw_data)</code></div><div class="line number2 index1 alt1"><code class="bash plain">res = AnomalyDetectionTs(raw_data, max_anoms=0.02, direction=</code><code class="bash string">'both'</code><code class="bash plain">, plot=TRUE)</code></div><div class="line number3 index2 alt2"><code class="bash plain">res$plot</code></div></div></td></tr></tbody></table></div></div>
+<p>This yields the following plot:</p>
+<p><a href="./twitteranomaly_files/figure_5_.91anomalies.png"><img src="./twitteranomaly_files/figure_5_.91anomalies.png" width="700" height="266" alt="" class="align-left"></a></p>
+<p>From the plot, we can tell that the input time series experiences both positive and negative anomalies. Furthermore, many of the anomalies in the time series are local anomalies within the bounds of the time series’ seasonality.</p>
+<p>Therefore, these anomalies can’t be detected using the traditional methods. The anomalies detected using the proposed technique are annotated on the plot. In case the timestamps for the plot above were not available, anomaly detection could then be carried out using the AnomalyDetectionVec function. Specifically, you can use the following command:</p>
+<div><div id="highlighter_575994" class="syntaxhighlighter  bash"><div class="toolbar"><span><a href="https://blog.twitter.com/2015/introducing-practical-and-robust-anomaly-detection-in-a-time-series#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash plain">AnomalyDetectionVec(raw_data[,2], max_anoms=0.02, period=1440, direction=</code><code class="bash string">'both'</code><code class="bash plain">, only_last=FALSE, plot=TRUE)</code></div></div></td></tr></tbody></table></div></div>
+<p>Often, anomaly detection is carried out on a periodic basis. For instance, you may be interested in determining whether there were any anomalies yesterday. To this end, we support a flag only_last where one can subset the anomalies that occurred during the last day or last hour. The following command</p>
+<div><div id="highlighter_124265" class="syntaxhighlighter  bash"><div class="toolbar"><span><a href="https://blog.twitter.com/2015/introducing-practical-and-robust-anomaly-detection-in-a-time-series#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash plain">res = AnomalyDetectionTs(raw_data, max_anoms=0.02, direction=</code><code class="bash string">'both'</code><code class="bash plain">, only_last=</code><code class="bash string">"day"</code><code class="bash plain">, plot=TRUE)</code></div><div class="line number2 index1 alt1"><code class="bash plain">res$plot</code></div></div></td></tr></tbody></table></div></div>
+<p>yields the following plot:</p>
+<p><a href="./twitteranomaly_files/figure_6_1.74_anomalies_1.png"><img src="./twitteranomaly_files/figure_6_1.74_anomalies_1.png" width="700" height="266" alt="" class="align-left"></a></p>
+<p>From the above plot, we observe that only the anomalies that occurred during the last day have been annotated. Additionally, the prior six days are included to expose the seasonal nature of the time series but are put in the background as the window of primary interest is the last day.</p>
+<p>Anomaly detection for long duration time series can be carried out by setting the longterm argument to T. An example plot corresponding to this (for a different data set) is shown below:<a href="./twitteranomaly_files/figure_longterm.png"><img src="./twitteranomaly_files/figure_longterm.png" width="700" height="225" alt="" class="align-left"></a></p>
+<p><strong>Acknowledgements</strong></p>
+<p>Our thanks to <a href="https://twitter.com/jtsiamis">James Tsiamis</a> and <a href="https://twitter.com/scott_wonger">Scott Wong</a> for their assistance, and Owen Vallis (<a href="https://twitter.com/intent/user?screen_name=OwenVallis">@OwenVallis</a>) and Jordan Hochenbaum (<a href="https://twitter.com/intent/user?screen_name=jnatanh">@jnatanh</a>) for this research.</p>
+<p><strong>References</strong></p>
+<p>[1] Charu C. Aggarwal. “<em>Outlier analysis</em>”. Springer, 2013.</p>
+<p>[2] Varun Chandola, Arindam Banerjee, and Vipin Kumar. “<em>Anomaly detection: A survey</em>”. ACM Computing Surveys, 41(3):15:1{15:58, July 2009.</p>
+<p>[3] Rosner, B., (May 1983), “<em>Percentage Points for a Generalized ESD Many-Outlier Procedure</em>”, Technometrics, 25(2), pp. 165-172.</p>
+<p>[4] Vallis, O., Hochenbaum, J. and Kejariwal, A., (2014) “<em>A Novel Technique for Long-Term Anomaly Detection in the Cloud</em>”, 6th USENIX Workshop on Hot Topics in Cloud Computing, Philadelphia, PA.</p></div></div>          <div class="post-tags">
+        <div class="d-field d-field-blog-tags g-blog-tags clearfix"><strong class="field-label">Tags: </strong><ul class="links inline"><li><a href="https://blog.twitter.com/tags/developers">developers</a> and <a href="https://blog.twitter.com/tags/open-source">open source</a> </li></ul></div>      </div>
+    
+        <div class="pagination pagination-centered">
+      <div class="item-list"><ul><li class="next first last"><a href="https://blog.twitter.com/2014/building-a-complete-tweet-index">Older post</a></li>
+</ul></div>    </div>
+    
+  </div>
+</div>
+</div>              </article>
+
+              
+            </div>
+                        <aside id="sidebar-second" class="span3">
+              <div class="d-block d-block-helper-blog-blocks g-eng-tips-tools-practices">
+        <a href="https://engineering.twitter.com/" class="vertical-site-image-link"><img src="./twitteranomaly_files/engineering_blog_0.png" alt="Twitter Engineering" title="Twitter Engineering"></a><h2 class="title SystemBlock-title">Under the hood</h2>
+<h3 class="SystemBlock-subtitle">Tools, projects &amp; community</h3>
+<a href="https://engineering.twitter.com/" class="vertical-site-link">engineering.twitter.com</a>
+
+</div><div class="d-block d-block-helper-blog-blocks g-blog-related-posts">
+        <h2 class="title">Related Posts</h2>
+      <div class="item-list"><ul><li class="first last"><a href="https://blog.twitter.com/2014/breakout-detection-in-the-wild">Breakout detection in the wild</a></li>
+</ul></div></div><div class="d-block d-block-helper-tfw g-helper-tfw-embedded-timeline" data-twttr-id="twttr-sandbox-0">
+        <iframe id="twitter-widget-1" scrolling="no" frameborder="0" allowtransparency="true" class="twitter-timeline twitter-timeline-rendered" allowfullscreen="" style="border: none; max-width: 100%; min-width: 180px; width: 220px;" title="Twitter Timeline" height="430"></iframe></div><div class="d-block d-block-helper-blog-blocks g-browse-by-tags">
+        <div class="item-list"><h3><span data-group="recent" class="recent"><a class="active is-active" href="https://blog.twitter.com/#">Recent</a></span><span data-group="popular" class="popular"><a href="https://blog.twitter.com/#">Popular</a></span></h3><ol class="recent"><li class="List--browser--tag-tag first"><a href="https://blog.twitter.com/taxonomy/term/445?blog=engineering">developers <span>(1)</span></a></li>
+<li class="List--browser--tag-tag"><a href="https://blog.twitter.com/taxonomy/term/449?blog=engineering">events <span>(1)</span></a></li>
+<li class="List--browser--tag-tag"><a href="https://blog.twitter.com/taxonomy/term/497?blog=engineering">visualizations <span>(1)</span></a></li>
+<li class="List--browser--tag-tag"><a href="https://blog.twitter.com/taxonomy/term/493?blog=engineering">Twitter data <span>(1)</span></a></li>
+<li class="List--browser--tag-tag"><a href="https://blog.twitter.com/taxonomy/term/511?blog=engineering">web scale <span>(3)</span></a></li>
+<li class="List--browser--tag-tag"><a href="https://blog.twitter.com/taxonomy/term/510?blog=engineering">distributed database <span>(1)</span></a></li>
+<li class="List--browser--tag-tag"><a href="https://blog.twitter.com/taxonomy/term/492?blog=engineering">Twitter culture <span>(1)</span></a></li>
+<li class="List--browser--tag-tag"><a href="https://blog.twitter.com/taxonomy/term/447?blog=engineering">education <span>(3)</span></a></li>
+<li class="List--browser--tag-tag"><a href="https://blog.twitter.com/taxonomy/term/434?blog=engineering">announcements <span>(8)</span></a></li>
+<li class="List--browser--tag-tag hidden is-hidden is-collapsible"><a href="https://blog.twitter.com/taxonomy/term/481?blog=engineering">security <span>(5)</span></a></li>
+<li class="List--browser--tag-tag hidden is-hidden is-collapsible"><a href="https://blog.twitter.com/taxonomy/term/470?blog=engineering">open source <span>(41)</span></a></li>
+<li class="List--browser--tag-tag hidden is-hidden is-collapsible"><a href="https://blog.twitter.com/taxonomy/term/459?blog=engineering">java <span>(5)</span></a></li>
+<li class="List--browser--tag-tag hidden is-hidden is-collapsible"><a href="https://blog.twitter.com/taxonomy/term/460?blog=engineering">javascript <span>(5)</span></a></li>
+<li class="List--browser--tag-tag hidden is-hidden is-collapsible"><a href="https://blog.twitter.com/taxonomy/term/477?blog=engineering">research <span>(8)</span></a></li>
+<li class="List--browser--tag-tag hidden is-hidden is-collapsible"><a href="https://blog.twitter.com/taxonomy/term/455?blog=engineering">hadoop <span>(7)</span></a></li>
+<li class="List--browser--tag-tag hidden is-hidden is-collapsible"><a href="https://blog.twitter.com/taxonomy/term/466?blog=engineering">mobile <span>(6)</span></a></li>
+<li class="List--browser--tag-tag hidden is-hidden is-collapsible"><a href="https://blog.twitter.com/taxonomy/term/479?blog=engineering">scala <span>(9)</span></a></li>
+<li class="List--browser--tag-tag hidden is-hidden is-collapsible last"><a href="https://blog.twitter.com/taxonomy/term/478?blog=engineering">ruby <span>(3)</span></a></li>
+</ol></div><div class="item-list"><ol class="hidden is-hidden popular"><li class="List--browser--tag-tag first"><a href="https://blog.twitter.com/taxonomy/term/470?blog=engineering">open source <span>(41)</span></a></li>
+<li class="List--browser--tag-tag"><a href="https://blog.twitter.com/taxonomy/term/479?blog=engineering">scala <span>(9)</span></a></li>
+<li class="List--browser--tag-tag"><a href="https://blog.twitter.com/taxonomy/term/434?blog=engineering">announcements <span>(8)</span></a></li>
+<li class="List--browser--tag-tag"><a href="https://blog.twitter.com/taxonomy/term/477?blog=engineering">research <span>(8)</span></a></li>
+<li class="List--browser--tag-tag"><a href="https://blog.twitter.com/taxonomy/term/455?blog=engineering">hadoop <span>(7)</span></a></li>
+<li class="List--browser--tag-tag"><a href="https://blog.twitter.com/taxonomy/term/466?blog=engineering">mobile <span>(6)</span></a></li>
+<li class="List--browser--tag-tag"><a href="https://blog.twitter.com/taxonomy/term/459?blog=engineering">java <span>(5)</span></a></li>
+<li class="List--browser--tag-tag"><a href="https://blog.twitter.com/taxonomy/term/481?blog=engineering">security <span>(5)</span></a></li>
+<li class="List--browser--tag-tag"><a href="https://blog.twitter.com/taxonomy/term/460?blog=engineering">javascript <span>(5)</span></a></li>
+<li class="List--browser--tag-tag hidden is-hidden is-collapsible"><a href="https://blog.twitter.com/taxonomy/term/478?blog=engineering">ruby <span>(3)</span></a></li>
+<li class="List--browser--tag-tag hidden is-hidden is-collapsible"><a href="https://blog.twitter.com/taxonomy/term/447?blog=engineering">education <span>(3)</span></a></li>
+<li class="List--browser--tag-tag hidden is-hidden is-collapsible"><a href="https://blog.twitter.com/taxonomy/term/511?blog=engineering">web scale <span>(3)</span></a></li>
+<li class="List--browser--tag-tag hidden is-hidden is-collapsible"><a href="https://blog.twitter.com/taxonomy/term/449?blog=engineering">events <span>(1)</span></a></li>
+<li class="List--browser--tag-tag hidden is-hidden is-collapsible"><a href="https://blog.twitter.com/taxonomy/term/497?blog=engineering">visualizations <span>(1)</span></a></li>
+<li class="List--browser--tag-tag hidden is-hidden is-collapsible"><a href="https://blog.twitter.com/taxonomy/term/493?blog=engineering">Twitter data <span>(1)</span></a></li>
+<li class="List--browser--tag-tag hidden is-hidden is-collapsible"><a href="https://blog.twitter.com/taxonomy/term/510?blog=engineering">distributed database <span>(1)</span></a></li>
+<li class="List--browser--tag-tag hidden is-hidden is-collapsible"><a href="https://blog.twitter.com/taxonomy/term/492?blog=engineering">Twitter culture <span>(1)</span></a></li>
+<li class="List--browser--tag-tag hidden is-hidden is-collapsible last"><a href="https://blog.twitter.com/taxonomy/term/445?blog=engineering">developers <span>(1)</span></a></li>
+</ol></div><a class="show" href="https://blog.twitter.com/#">Show more tags</a><a class="collapse-tags hidden is-hidden" href="https://blog.twitter.com/#">Collapse</a></div><div class="d-block d-block-helper-blog-blocks g-browse-by-date">
+        <div class="item-list"><h3><span class="year">Year</span><span class="month">Month</span></h3><ol style="height: 204px;"><li data-count="1" data-year="2015" class="active is-active first"><a href="https://blog.twitter.com/engineering?year=2015" class="active is-active">2015 <span>(1)</span></a><div class="item-list"><ol data-count="1" data-year="2015" class="active is-active"><li data-count="1" class="first last"><a href="https://blog.twitter.com/engineering?year=2015&month=1" class="">Jan <span>(1)</span></a></li>
+</ol></div></li>
+<li data-count="22" data-year="2014" class=""><a href="https://blog.twitter.com/engineering?year=2014" class="">2014 <span>(22)</span></a><div class="item-list"><ol data-count="22" data-year="2014" class=""><li data-count="1" class="first"><a href="https://blog.twitter.com/engineering?year=2014&month=1" class="">Jan <span>(1)</span></a></li>
+<li data-count="3"><a href="https://blog.twitter.com/engineering?year=2014&month=2" class="">Feb <span>(3)</span></a></li>
+<li data-count="2"><a href="https://blog.twitter.com/engineering?year=2014&month=3" class="">Mar <span>(2)</span></a></li>
+<li data-count="3"><a href="https://blog.twitter.com/engineering?year=2014&month=4" class="">Apr <span>(3)</span></a></li>
+<li data-count="1"><a href="https://blog.twitter.com/engineering?year=2014&month=5" class="">May <span>(1)</span></a></li>
+<li data-count="1"><a href="https://blog.twitter.com/engineering?year=2014&month=6" class="">Jun <span>(1)</span></a></li>
+<li data-count="5"><a href="https://blog.twitter.com/engineering?year=2014&month=8" class="">Aug <span>(5)</span></a></li>
+<li data-count="3"><a href="https://blog.twitter.com/engineering?year=2014&month=9" class="">Sep <span>(3)</span></a></li>
+<li data-count="2"><a href="https://blog.twitter.com/engineering?year=2014&month=10" class="">Oct <span>(2)</span></a></li>
+<li data-count="1" class="last"><a href="https://blog.twitter.com/engineering?year=2014&month=11" class="">Nov <span>(1)</span></a></li>
+</ol></div></li>
+<li data-count="28" data-year="2013" class=""><a href="https://blog.twitter.com/engineering?year=2013" class="">2013 <span>(28)</span></a><div class="item-list"><ol data-count="28" data-year="2013" class=""><li data-count="2" class="first"><a href="https://blog.twitter.com/engineering?year=2013&month=1" class="">Jan <span>(2)</span></a></li>
+<li data-count="3"><a href="https://blog.twitter.com/engineering?year=2013&month=2" class="">Feb <span>(3)</span></a></li>
+<li data-count="1"><a href="https://blog.twitter.com/engineering?year=2013&month=4" class="">Apr <span>(1)</span></a></li>
+<li data-count="1"><a href="https://blog.twitter.com/engineering?year=2013&month=5" class="">May <span>(1)</span></a></li>
+<li data-count="4"><a href="https://blog.twitter.com/engineering?year=2013&month=6" class="">Jun <span>(4)</span></a></li>
+<li data-count="2"><a href="https://blog.twitter.com/engineering?year=2013&month=7" class="">Jul <span>(2)</span></a></li>
+<li data-count="6"><a href="https://blog.twitter.com/engineering?year=2013&month=8" class="">Aug <span>(6)</span></a></li>
+<li data-count="3"><a href="https://blog.twitter.com/engineering?year=2013&month=9" class="">Sep <span>(3)</span></a></li>
+<li data-count="3"><a href="https://blog.twitter.com/engineering?year=2013&month=10" class="">Oct <span>(3)</span></a></li>
+<li data-count="2"><a href="https://blog.twitter.com/engineering?year=2013&month=11" class="">Nov <span>(2)</span></a></li>
+<li data-count="1" class="last"><a href="https://blog.twitter.com/engineering?year=2013&month=12" class="">Dec <span>(1)</span></a></li>
+</ol></div></li>
+<li data-count="36" data-year="2012" class=""><a href="https://blog.twitter.com/engineering?year=2012" class="">2012 <span>(36)</span></a><div class="item-list"><ol data-count="36" data-year="2012" class=""><li data-count="1" class="first"><a href="https://blog.twitter.com/engineering?year=2012&month=1" class="">Jan <span>(1)</span></a></li>
+<li data-count="2"><a href="https://blog.twitter.com/engineering?year=2012&month=2" class="">Feb <span>(2)</span></a></li>
+<li data-count="3"><a href="https://blog.twitter.com/engineering?year=2012&month=3" class="">Mar <span>(3)</span></a></li>
+<li data-count="3"><a href="https://blog.twitter.com/engineering?year=2012&month=4" class="">Apr <span>(3)</span></a></li>
+<li data-count="5"><a href="https://blog.twitter.com/engineering?year=2012&month=5" class="">May <span>(5)</span></a></li>
+<li data-count="4"><a href="https://blog.twitter.com/engineering?year=2012&month=6" class="">Jun <span>(4)</span></a></li>
+<li data-count="1"><a href="https://blog.twitter.com/engineering?year=2012&month=7" class="">Jul <span>(1)</span></a></li>
+<li data-count="6"><a href="https://blog.twitter.com/engineering?year=2012&month=8" class="">Aug <span>(6)</span></a></li>
+<li data-count="1"><a href="https://blog.twitter.com/engineering?year=2012&month=9" class="">Sep <span>(1)</span></a></li>
+<li data-count="1"><a href="https://blog.twitter.com/engineering?year=2012&month=10" class="">Oct <span>(1)</span></a></li>
+<li data-count="3"><a href="https://blog.twitter.com/engineering?year=2012&month=11" class="">Nov <span>(3)</span></a></li>
+<li data-count="6" class="last"><a href="https://blog.twitter.com/engineering?year=2012&month=12" class="">Dec <span>(6)</span></a></li>
+</ol></div></li>
+<li data-count="12" data-year="2011" class=""><a href="https://blog.twitter.com/engineering?year=2011" class="">2011 <span>(12)</span></a><div class="item-list"><ol data-count="12" data-year="2011" class=""><li data-count="3" class="first"><a href="https://blog.twitter.com/engineering?year=2011&month=3" class="">Mar <span>(3)</span></a></li>
+<li data-count="1"><a href="https://blog.twitter.com/engineering?year=2011&month=4" class="">Apr <span>(1)</span></a></li>
+<li data-count="2"><a href="https://blog.twitter.com/engineering?year=2011&month=5" class="">May <span>(2)</span></a></li>
+<li data-count="1"><a href="https://blog.twitter.com/engineering?year=2011&month=6" class="">Jun <span>(1)</span></a></li>
+<li data-count="1"><a href="https://blog.twitter.com/engineering?year=2011&month=7" class="">Jul <span>(1)</span></a></li>
+<li data-count="2"><a href="https://blog.twitter.com/engineering?year=2011&month=8" class="">Aug <span>(2)</span></a></li>
+<li data-count="1"><a href="https://blog.twitter.com/engineering?year=2011&month=9" class="">Sep <span>(1)</span></a></li>
+<li data-count="1" class="last"><a href="https://blog.twitter.com/engineering?year=2011&month=11" class="">Nov <span>(1)</span></a></li>
+</ol></div></li>
+<li data-count="30" data-year="2010" class=" last"><a href="https://blog.twitter.com/engineering?year=2010" class="">2010 <span>(30)</span></a><div class="item-list"><ol data-count="30" data-year="2010" class=""><li data-count="6" class="first"><a href="https://blog.twitter.com/engineering?year=2010&month=2" class="">Feb <span>(6)</span></a></li>
+<li data-count="1"><a href="https://blog.twitter.com/engineering?year=2010&month=3" class="">Mar <span>(1)</span></a></li>
+<li data-count="4"><a href="https://blog.twitter.com/engineering?year=2010&month=4" class="">Apr <span>(4)</span></a></li>
+<li data-count="2"><a href="https://blog.twitter.com/engineering?year=2010&month=5" class="">May <span>(2)</span></a></li>
+<li data-count="5"><a href="https://blog.twitter.com/engineering?year=2010&month=6" class="">Jun <span>(5)</span></a></li>
+<li data-count="4"><a href="https://blog.twitter.com/engineering?year=2010&month=7" class="">Jul <span>(4)</span></a></li>
+<li data-count="2"><a href="https://blog.twitter.com/engineering?year=2010&month=8" class="">Aug <span>(2)</span></a></li>
+<li data-count="4"><a href="https://blog.twitter.com/engineering?year=2010&month=9" class="">Sep <span>(4)</span></a></li>
+<li data-count="2" class="last"><a href="https://blog.twitter.com/engineering?year=2010&month=10" class="">Oct <span>(2)</span></a></li>
+</ol></div></li>
+</ol></div></div>            </aside>
+            
+          </div>
+        </div>
+      </div>
+      
+    </div>  </section>
+    <footer id="gaz-sub-footer" class="row-fluid">
+    <div class="container">
+      <div class="d-block d-block-helper-tfw g-helper-tfw-tweet-count-button">
+        <div class="g-tweet-button"><iframe id="twitter-widget-0" scrolling="no" frameborder="0" allowtransparency="true" src="./twitteranomaly_files/tweet_button.a8867d06719745ebf3f9c8b2ae835b17.en.html" class="twitter-share-button twitter-tweet-button twitter-share-button twitter-count-horizontal" title="Twitter Tweet Button" data-twttr-rendered="true" style="width: 140px; height: 28px;"></iframe></div></div>    </div>
+  </footer>
+  
+  <footer id="globalfooter" class="row-fluid">
+    <div class="container">
+      <div class="d-block d-block-menu g-menu-global-footer">
+  <ul class="menu nav clearfix" role="menu"><li class="first leaf" role="menuitem"><a href="https://about.twitter.com/" target="_blank">About</a></li>
+<li class="leaf" role="menuitem"><a href="https://support.twitter.com/" target="_blank">Support</a></li>
+<li class="leaf" role="menuitem"><a href="https://twitter.com/tos" target="_blank">Terms</a></li>
+<li class="leaf" role="menuitem"><a href="https://twitter.com/privacy" target="_blank">Privacy</a></li>
+<li class="last leaf" role="menuitem"><a href="https://support.twitter.com/articles/20170514" target="_blank">Cookies</a></li>
+</ul></div>      <span class="copyright">© 2015 Twitter, Inc.</span>
+    </div>
+  </footer>
+
+</div>
+    <script type="text/javascript" src="./twitteranomaly_files/js_Rk5YIkK6m2gKTGH-GrMu0pM_PlMKXnI0ktQUgXw1XgA.js"></script>
+<script type="text/javascript" src="./twitteranomaly_files/widgets.js"></script>
+<script type="text/javascript" src="./twitteranomaly_files/js_WRH7WYq-FQCJT26vr-LZAlWu_t37jPSQ1Sws4gdMfko.js"></script>
+<script type="text/javascript" src="./twitteranomaly_files/oct.js"></script>
+  
+
+<iframe id="rufous-sandbox" scrolling="no" frameborder="0" allowtransparency="true" style="display: none;"></iframe><script id="hiddenlpsubmitdiv" style="display: none;"></script><script>try{for(var lastpass_iter=0; lastpass_iter < document.forms.length; lastpass_iter++){ var lastpass_f = document.forms[lastpass_iter]; if(typeof(lastpass_f.lpsubmitorig2)=="undefined"){ lastpass_f.lpsubmitorig2 = lastpass_f.submit; lastpass_f.submit = function(){ var form=this; var customEvent = document.createEvent("Event"); customEvent.initEvent("lpCustomEvent", true, true); var d = document.getElementById("hiddenlpsubmitdiv"); if (d) {for(var i = 0; i < document.forms.length; i++){ if(document.forms[i]==form){ if (typeof(d.innerText) != 'undefined') { d.innerText=i; } else { d.textContent=i; } } } d.dispatchEvent(customEvent); }form.lpsubmitorig2(); } } }}catch(e){}</script></body></html>
