@@ -1,0 +1,19 @@
+---
+layout: default
+---
+
+<div class="has-sidebar">
+
+	<div class="sidebar-main">
+		{{content}}
+	</div>
+
+	<aside class="sidebar-sidebar">
+
+		{% include project-list.html %}
+
+		{% include category-list.html %}
+	</aside>
+</div>
+
+<div class="clear"></div>

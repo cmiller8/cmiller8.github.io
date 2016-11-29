@@ -1,0 +1,13 @@
+<div class="sidebar-item">
+  <h3>Blog Categories</h3>
+
+  <ul id="category_list">
+    {% for category in site.categories %}
+    <li>
+      {% categorylink category[0] %}
+      {{ category | first | capitalize_all }}
+      {% endcategorylink %}
+    </li>
+    {% endfor %}
+  </ul>
+</div>

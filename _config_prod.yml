@@ -1,0 +1,4 @@
+# Production-specific config overrides
+env: production
+limit_posts: 0
+drafts: false

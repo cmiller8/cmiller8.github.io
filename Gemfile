@@ -1,2 +1,12 @@
 source 'https://rubygems.org'
-gem 'github-pages'
+
+gem 'jekyll', '>= 3.0.0.beta'
+gem 'jekyll-import'
+gem 'sequel'
+gem 'unidecode'
+gem 'fileutils'
+gem 'safe_yaml'
+gem 'htmlentities'
+gem 'mysql2'
+gem 'oembed'
+gem 'ruby-oembed'

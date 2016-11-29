@@ -1,0 +1,22 @@
+---
+layout: post
+status: publish
+published: true
+title: Some Days...
+date: '2013-02-13 16:08:38 -0600'
+date_gmt: '2013-02-13 16:08:38 -0600'
+categories:
+- Nerd Stuff
+- Personal
+
+comments: true
+
+emphasize: true
+images:
+  - src: http://imgs.xkcd.com/comics/computer_problems.png
+    external: true
+
+---
+
+
+Oh <a href="http://xkcd.com/722/" target="_blank">XKCD</a>. You're the best.

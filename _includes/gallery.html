@@ -1,0 +1,24 @@
+{% if page.images %}
+{% assign images = page.images %}
+{% endif %}
+
+
+<div class="gallery packery">
+  {% for image in images %}
+
+		{% capture thumbIdx %}files/thumbs/{{image.src}}{% endcapture %}
+		{% assign thumbInfo = site.data.images[thumbIdx] %}
+		{% capture mediumIdx %}files/medium/{{image.src}}{% endcapture %}
+		{% assign mediumInfo = site.data.images[mediumIdx] %}
+
+	  	<div class="item pack {%if image.emphasize %}emphasize{% endif %}">
+		<a href="{{ site.cdn_path }}/large/{{image.src}}" title="{{image.caption | escape_once}}">
+			{% if image.emphasize %}
+				<img src="{{ site.cdn_path }}/medium/{{image.src}}" data-aspect="{{mediumInfo.aspect}}" />
+			{% else %}
+				<img src="{{ site.cdn_path }}/thumbs/{{image.src}}" data-aspect="{{thumbInfo.aspect}}" />
+			{% endif %}
+		</a>
+	</div>
+  {% endfor %}
+</div>

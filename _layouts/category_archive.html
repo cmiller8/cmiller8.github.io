@@ -1,0 +1,23 @@
+---
+layout: has_sidebar
+---
+
+<div class="category-archive-description limit-width">
+  <h1>{{page.category | capitalize_all}}</h1>
+  {% capture slug %}{{ page.category | slugify }}{% endcapture %}
+  {% assign desc = site.data.category_descriptions[slug] %}
+  {% if desc %}
+  {{   desc | markdownify }}
+  {% endif %}
+</div>
+
+<div class="category-archive packery-posts">
+  <div>
+    <ul class="post-list">
+      {% for post in page.posts reversed %}
+      {% include post-excerpt.html %}
+      {% endfor %}
+    </ul>
+
+  </div>
+</div>

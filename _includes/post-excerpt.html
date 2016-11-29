@@ -1,0 +1,66 @@
+        <li class='post {% if post.emphasize %}emphasize{% endif %}'>
+          <div class="inner">
+            <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+            <h2>
+              <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+            </h2>
+
+            {% if post.video %}
+              {% assign videoFormats = post.video %}
+              {% include video-player.html %}
+
+            {% elsif post.cover or post.images %}
+
+              {% if post.cover %}
+              {%   assign cover = post.cover %}
+              {% else %}
+              {%   assign cover = post.images[0] %}
+              {% endif %}
+
+              {% if cover.external %}
+              <p>
+
+                {% unless cover.nolink %}
+                <a href="{{ cover.src }}">
+                {% endunless %}
+
+                  {% capture thumbIdx %}{{cover.src}}{% endcapture %}
+                  {% assign thumbInfo = site.data.images[thumbIdx] %}
+                  <img src='{{ cover.src }}' data-aspect='{{thumbInfo.aspect}}' />
+
+                {% unless cover.nolink %}
+                </a>
+                {% endunless %}
+
+              </p>
+              {% else %}
+              <p>
+                {% capture thumbIdx %}files/thumbs/{{cover.src}}{% endcapture %}
+                {% assign thumbInfo = site.data.images[thumbIdx] %}
+                {% capture mediumIdx %}files/medium/{{cover.src}}{% endcapture %}
+                {% assign mediumInfo = site.data.images[mediumIdx] %}
+
+                {% unless cover.nolink %}
+                <a href="{{ site.cdn_path }}/large/{{ cover.src }}">
+                {% endunless %}
+
+                  {% if post.emphasize %}
+                    <img src='{{ site.cdn_path }}/medium/{{ cover.src }}' data-aspect='{{mediumInfo.aspect}}' />
+                  {% else %}
+                    <img src='{{ site.cdn_path }}/thumbs/{{ cover.src }}' data-aspect='{{thumbInfo.aspect}}' />
+                  {% endif %}
+
+                {% unless cover.nolink %}
+                </a>
+                {% endunless %}
+
+
+              </p>
+              {% endif %}
+            {% endif %}
+
+            {{ post.excerpt | strip_html | truncatewords:50 }}
+
+            <a class='read-more' href="{{ post.url | prepend: site.baseurl }}">Read More &rarr;</a>
+          </div>
+        </li>
