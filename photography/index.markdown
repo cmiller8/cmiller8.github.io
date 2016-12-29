@@ -1,6 +1,0 @@
----
-layout: portfolio
-albumGroup: photography
----
-
-

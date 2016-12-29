@@ -1,5 +1,0 @@
----
-layout: portfolio
-albumGroup: lighting
-
----

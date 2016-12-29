@@ -1,68 +1,15 @@
 ---
-layout: has_sidebar
+layout: default
 ---
-<div class="post single">
+<div class="post">
 
   <header class="post-header">
-  	<p class="quiet"><a href="/">&larr; Back to Posts</a></p>
     <h1 class="post-title">{{ page.title }}</h1>
-    <p class="post-meta">{{ page.date | date: "%b %-d, %Y" }}{% if page.author %} • {{ page.author }}{% endif %}{% if page.meta %} • {{ page.meta }}{% endif %}</p>
-
-    {% if page.categories %}
-    <p class="categories quiet">Posted in
-	{% for category in page.categories %}
-	- <a href='/category/{{ category | slugify }}'>{{ category }}</a>
-	{% endfor %}
-    </p>
-    {% endif %}
+    <p class="post-meta">{{ page.date | date: "%B %-d, %Y — %H:%M" }}{% if page.author %} • {{ page.author }}{% endif %}{% if page.meta %} • {{ page.meta }}{% endif %}</p>
   </header>
 
   <article class="post-content">
-
-	{% if page.images.size == 1 %}
-		{% if page.images[0].external %}
-		<p>
-			<a href="{{ page.images[0].src }}">
-				<img src='{{ page.images[0].src }}' />
-			</a>
-		</p>
-		{% else %}
-		<p>
-			<a href="{{ site.cdn_path }}/large/{{ page.images[0].src }}">
-				<img src='{{ site.cdn_path }}/large/{{ page.images[0].src }}' />
-			</a>
-		</p>
-		{% endif %}
-
-	{% elsif page.video %}
-    {% assign videoFormats = page.video %}
-    {% include video-player.html %}
-	{% endif %}
-
     {{ content }}
   </article>
-
-  {% if page.comments %}
-  <div id="disqus_thread"></div>
-    <script>
-        /**
-         *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-         *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
-         */
-        var disqus_config = function () {
-            this.page.url = '{{ site.url }}{{ page.url | uri_escape }}';  // Replace PAGE_URL with your page's canonical URL variable
-            this.page.identifier = '{{ page.path | split:'/' | last | cgi_escape }}'
-        };
-        (function() {  // DON'T EDIT BELOW THIS LINE
-            var d = document, s = d.createElement('script');
-            
-            s.src = '//benwilhelm.disqus.com/embed.js';
-            
-            s.setAttribute('data-timestamp', +new Date());
-            (d.head || d.body).appendChild(s);
-        })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-  {% endif %}
 
 </div>

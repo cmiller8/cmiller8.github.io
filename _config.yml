@@ -1,32 +1,29 @@
 # Site settings
-title: Ben Wilhelm
-email: benjamin.m.wilhelm@gmail.com
+title: *folio
+email: you@example.com
 description: > # this means to ignore newlines until "baseurl:"
-  Web developer and sometime theatrical lighting designer living in Chicago, IL.
-
-baseurl: "" # the subpath of your site, e.g. /blog/
-#url: "http://benwilhelm.com" # the base hostname & protocol for your site
-#github_username:  benwilhelm
-
-
+  A simple, whitespace, helvetica based portfolio theme.
+baseurl:  # the subpath of your site, e.g. /blog/
+url:  # the base hostname & protocol for your site
+twitter_username: twitter_username
+github_username:  github_username
 
 # Build settings
 markdown: kramdown
 
-permalink: pretty
+highlighter: pygments
 
-highligher: pygments
-
-cdn_path: https://dl.dropboxusercontent.com/u/8637739/benwilhelm.com
-
-category_archive:
-  path: category
-  layout: category_archive
-  slugify: true
+# Pagination
+paginate: 15
+paginate_path: "/blog/page:num/"
 
 
+collections:
+  portfolio:
+    output: true
+    permalink: /portfolio/:path/
+  poetry:
+    output: true
+    permalink: /poetry/:path/
 
-# Environment-specific settings
-env: development
-drafts: true #this setting is overridden in the grunt-jekyll task
-# limit_posts: 5
+
