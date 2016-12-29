@@ -9,6 +9,7 @@ permalink: /about/
 <br/>
 A small town Nebraska boy dreamed of traveling the world and this is where he went.
 
+
 <br/>
 <hr/>
 <br/>
