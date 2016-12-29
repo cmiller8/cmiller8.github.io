@@ -1,11 +1,12 @@
 # Site settings
-title: absurdly lost
-email: miller.clayton@gmail.com	
-description: A collection on journeys
+title: *folio
+email: you@example.com
+description: > # this means to ignore newlines until "baseurl:"
+  A simple, whitespace, helvetica based portfolio theme.
 baseurl:  # the subpath of your site, e.g. /blog/
 url:  # the base hostname & protocol for your site
-twitter_username: @datadrivenbuilding
-github_username:  cmiller8
+twitter_username: twitter_username
+github_username:  github_username
 
 # Build settings
 markdown: kramdown
@@ -21,8 +22,8 @@ collections:
   portfolio:
     output: true
     permalink: /portfolio/:path/
-  # poetry:
-  #   output: true
-  #   permalink: /poetry/:path/
+  poetry:
+    output: true
+    permalink: /poetry/:path/
 
 
