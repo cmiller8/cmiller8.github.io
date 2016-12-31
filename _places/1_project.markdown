@@ -6,5 +6,5 @@ img: /img/1.jpg
 ---
 
 
-<img class="col one center" src="/img/14.jpg">
+<img class="col one center" src="/img/10.jpg">
 
