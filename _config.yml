@@ -3,7 +3,7 @@ title: mytravels
 email: miller.clayton.com
 description: > # this means to ignore newlines until "baseurl:"
   A simple, whitespace, helvetica based portfolio theme.
-baseurl:  http://cmiller8.github.io
+baseurl:  /cmiller8.github.io
 url:  # the base hostname & protocol for your site
 twitter_username: twitter_username
 github_username:  github_username
@@ -16,7 +16,7 @@ highlighter: rouge
 
 # Pagination
 paginate: 15
-paginate_path: "/blog/page:num/"
+paginate_path: "/places/page:num/"
 
 collections:
   places:
