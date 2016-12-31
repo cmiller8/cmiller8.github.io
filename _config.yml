@@ -11,10 +11,10 @@ github_username:  github_username
 # Build settings
 markdown: kramdown
 
-# highlighter: pygments
+highlighter: pygments
 
 # Pagination
-paginate: 100
+paginate: 15
 paginate_path: "/blog/page:num/"
 
 
@@ -26,5 +26,4 @@ collections:
   #   output: true
   #   permalink: /poetry/:path/
 
-gems:
-    - jekyll-maps
+
