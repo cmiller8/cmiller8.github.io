@@ -11,7 +11,7 @@ github_username:  github_username
 # Build settings
 markdown: kramdown
 
-highlighter: pygments
+# highlighter: pygments
 
 # Pagination
 paginate: 15
@@ -26,4 +26,5 @@ collections:
   #   output: true
   #   permalink: /poetry/:path/
 
-
+gems:
+    - jekyll-maps
