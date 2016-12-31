@@ -2,7 +2,7 @@
 layout: post
 title: Frontier County
 description: farm shots from long ago
-img: /img/2013/2013_06_farm_3.jpg
+img: /img/2013_06_farm_3.jpg
 ---
 
 
