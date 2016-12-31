@@ -4,11 +4,11 @@ title: about
 permalink: /about/
 ---
 
-<img class="col one right" src="/img/farmkid.jpg">
 
 <br/>
 A small town Nebraska boy dreamed of traveling the world and this is where he went.
 
+<img class="center" src="/img/farmkid.jpg">
 
 
 <br/>
