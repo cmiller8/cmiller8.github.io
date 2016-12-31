@@ -9,7 +9,6 @@ twitter_username: twitter_username
 github_username:  github_username
 
 # Build settings
-gems: jekyll-maps
 
 markdown: kramdown
 
@@ -21,7 +20,4 @@ collections:
     output: true
     permalink: /places/:path/
 
-  maps:
-    google:
-      api_key: AIzaSyDrPWTmsSvMmGppdgbPRWlmBY1oS-3l2sI
 
