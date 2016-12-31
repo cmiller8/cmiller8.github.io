@@ -9,6 +9,8 @@ twitter_username: twitter_username
 github_username:  github_username
 
 # Build settings
+gems: jekyll-maps
+
 markdown: kramdown
 
 highlighter: rouge
