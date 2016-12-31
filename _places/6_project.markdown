@@ -3,6 +3,9 @@ layout: post
 title: Project
 description: a project with no image
 img: 
+location:
+  latitude: 48.8587741
+  longitude: 2.2074741
 ---
 
 Every project has a beautiful feature shocase page. It's easy to include images, in a flexible 3-column grid format. Make your photos 1/3, 2/3, or full width.
