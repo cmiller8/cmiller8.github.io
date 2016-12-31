@@ -7,35 +7,35 @@ img: /img/2013/2013_06_farm_3.jpg
 
 
 <div class="img_row">
-	<img class="col three" src="/img/2013_06_farm_1.jpg" alt="" title="example image"/>
+	<img class="col three" src="{{ site.baseurl }}/img/2013_06_farm_1.jpg" alt="" title="example image"/>
 </div>
 <!-- <div class="col three caption">
 	This image can also have a caption. It's like magic. 
 </div> -->
 
 <div class="img_row">
-	<img class="col three" src="{{ site.baseurl }}/img/2013/2013_06_farm_2.jpg" alt="" title="example image"/>
+	<img class="col three" src="{{ site.baseurl }}/img/2013_06_farm_2.jpg" alt="" title="example image"/>
 </div>
 <!-- <div class="col three caption">
 	This image can also have a caption. It's like magic. 
 </div> -->
 
 <div class="img_row">
-	<img class="col three" src="{{ site.baseurl }}/img/2013/2013_06_farm_3.jpg" alt="" title="example image"/>
+	<img class="col three" src="{{ site.baseurl }}/img/2013_06_farm_3.jpg" alt="" title="example image"/>
 </div>
 <!-- <div class="col three caption">
 	This image can also have a caption. It's like magic. 
 </div> -->
 
 <div class="img_row">
-	<img class="col three" src="{{ site.baseurl }}/img/2013/2013_06_farm_4.jpg" alt="" title="example image"/>
+	<img class="col three" src="{{ site.baseurl }}/img/2013_06_farm_4.jpg" alt="" title="example image"/>
 </div>
 <!-- <div class="col three caption">
 	This image can also have a caption. It's like magic. 
 </div> -->
 
 <div class="img_row">
-	<img class="col three" src="{{ site.baseurl }}/img/2013/2013_06_farm_5.jpg" alt="" title="example image"/>
+	<img class="col three" src="{{ site.baseurl }}/img/2013_06_farm_5.jpg" alt="" title="example image"/>
 </div>
 <!-- <div class="col three caption">
 	This image can also have a caption. It's like magic. 
