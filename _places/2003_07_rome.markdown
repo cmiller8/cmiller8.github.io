@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Rome
+title: Rome, Italy
 description: June 2003
 img: /img/2003/2003_07_rome_4.JPG
 

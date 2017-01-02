@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Pompei
+title: Pompei Italy
 description: July 2003
 img: /img/2003/2003_07_pompei_1.jpg
 

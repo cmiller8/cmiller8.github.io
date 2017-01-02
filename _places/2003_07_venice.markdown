@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Venice
+title: Venice, Italy
 description: July 2003
 img: /img/2003/2003_07_venice_4.jpg
 

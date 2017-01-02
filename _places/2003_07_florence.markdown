@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Florence
+title: Florence, Italy
 description: July 2003
 img: /img/2003/2003_07_florence_1.jpg
 
