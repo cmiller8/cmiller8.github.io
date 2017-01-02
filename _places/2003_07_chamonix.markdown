@@ -1,8 +1,8 @@
 ---
 layout: post
-title: Venice
+title: Chamonix, France
 description: July 2003
-img: /img/2003/2003_07_chamonixchamonix
+img: /img/2003/2003_07_chamonix_4.jpg
 
 ---
 
