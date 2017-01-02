@@ -4,7 +4,7 @@ title: places
 permalink: /places/
 ---
 
-{% for project in site.places %}
+{% for project in site.places reversed %}
 
 {% if project.redirect %}
 <div class="project">
