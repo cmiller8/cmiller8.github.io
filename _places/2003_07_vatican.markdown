@@ -2,7 +2,7 @@
 layout: post
 title: Project
 description: a project with a background image
-img: /img/2003_07_vatican_1.jpg
+img: /img/2003/2003_07_vatican_1.jpg
 
 ---
 
