@@ -8,11 +8,10 @@ permalink: /about/
 <br/>
 A small town Nebraska boy dreamed of traveling the world and this is where he went.
 
-<img class="col one center" src="/img/00_farmkid.jpg">
+<img style="text-align: center;" src="/img/00_farmkid.jpg">
 
 
 <br/>
-<hr/>
 <br/>
 <div class="col three caption">
 

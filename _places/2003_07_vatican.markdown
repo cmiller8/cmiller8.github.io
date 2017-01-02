@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Project
-description: a project with a background image
+title: Vatican City
+description: July 2003
 img: /img/2003/2003_07_vatican_1.jpg
 
 ---
